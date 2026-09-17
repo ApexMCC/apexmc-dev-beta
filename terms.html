@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Apex MCC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+    --background: rgb(0,0,0);
+    --foreground: hsl(127 29% 95%);
+    --primary: hsl(128 57% 51%);
+    --primary-foreground: hsl(129 54% 3%);
+    --muted: rgb(255,255,255);
+    --muted-foreground: rgb(255,255,255);
+    --card: hsl(144 29% 7%);
+    --border: hsl(144 29% 15%);
+    --nav-height: 64px;
+    --controls-height: 80px;
+    --accent-glow: hsl(128 57% 51% / 0.35);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html, body{ height: 100%; }
+  body{ overflow-y: auto; overflow-x: hidden; }
+
+  body{
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-orb-1 {
+    width: 420px;
+    height: 420px;
+    top: -120px;
+    right: -80px;
+    background: var(--accent-glow);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .bg-orb-2 {
+    width: 340px;
+    height: 340px;
+    bottom: -100px;
+    left: -60px;
+    background: rgba(120, 140, 255, 0.22);
+    animation: drift 22s ease-in-out infinite alternate-reverse;
+  }
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%);
+  }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-60px, 40px) scale(1.15); }
+  }
+
+  .wrap{
+    position: relative;
+    z-index: 1;
+    max-width: 1160px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 2.5rem 5px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* --- Nav --- */
+  nav{
+    height: var(--nav-height);
+    flex: 0 0 var(--nav-height);
+    display:flex;
+    align-items:center;
+    gap: 0.65rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo{ height: 32px; width: auto; display: block; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--foreground); font-size: 1.05rem; display:flex; align-items:center; }
+  .logo .dot{ width:8px; height:8px; border-radius:50%; background:var(--primary); display:inline-block; margin-right:0.5rem; box-shadow: 0 0 0 4px hsl(128 57% 51% / 0.18); }
+
+  .back-link{
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    opacity: 0.55;
+    text-decoration: none;
+    transition: opacity 0.15s ease, color 0.15s ease;
+  }
+
+  .back-link:hover{
+    opacity: 1;
+    color: var(--primary);
+  }
+
+  /* --- Hero --- */
+  .hero{
+    flex: 0 0 auto;
+    padding: 2.5rem 0 1.5rem;
+    max-width: 760px;
+  }
+
+  h1{
+    font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  h1 em{
+    font-style: italic;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .lede{
+    font-size: 0.92rem;
+    line-height: 1.55;
+    max-width: 60ch;
+    color: var(--muted-foreground);
+    opacity: 0.62;
+  }
+
+  .meta-row{
+    margin-top: 1.1rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill{
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: hsl(128 57% 51% / 0.1);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  /* --- Legal content layout --- */
+  .legal-layout{
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2.5rem;
+    padding-bottom: 5rem;
+    align-items: start;
+  }
+
+  .toc{
+    position: sticky;
+    top: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1.1rem;
+    background: var(--card);
+  }
+
+  .toc-title{
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted-foreground);
+    opacity: 0.5;
+    margin-bottom: 0.85rem;
+  }
+
+  .toc ol{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    counter-reset: toc;
+  }
+
+  .toc a{
+    counter-increment: toc;
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    opacity: 0.65;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: opacity 0.15s ease, color 0.15s ease;
+  }
+
+  .toc a::before{
+    content: counter(toc, decimal-leading-zero);
+    font-weight: 700;
+    color: var(--primary);
+    opacity: 0.9;
+    flex: 0 0 auto;
+  }
+
+  .toc a:hover{
+    opacity: 1;
+    color: var(--primary);
+  }
+
+  .content{
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--background);
+  }
+
+  section.clause{
+    padding: 2rem 2.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section.clause:last-child{
+    border-bottom: none;
+  }
+
+  section.clause h2{
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  section.clause h2 .num{
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: hsl(128 57% 51% / 0.1);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+  }
+
+  section.clause p{
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted-foreground);
+    opacity: 0.72;
+    margin-bottom: 0.9rem;
+  }
+
+  section.clause p:last-child{ margin-bottom: 0; }
+
+  section.clause ul{
+    margin: 0.9rem 0;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  section.clause li{
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+    opacity: 0.72;
+  }
+
+  section.clause strong{
+    color: var(--foreground);
+    opacity: 1;
+    font-weight: 600;
+  }
+
+  section.clause a.inline-link{
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px solid hsl(128 57% 51% / 0.35);
+  }
+
+  section.clause a.inline-link:hover{
+    border-bottom-color: var(--primary);
+  }
+.legal-crosslink{
+    margin-top: 1.75rem;
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .legal-crosslink a{
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--foreground);
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .legal-crosslink a:hover{
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  footer{
+    flex: 0 0 auto;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 0;
+    font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted-foreground);
+    opacity: 0.5;
+  }
+
+  footer a{ color: var(--foreground); opacity: 1; text-decoration: none; }
+  footer a:hover{ color: var(--primary); }
+
+  @media (max-width: 860px){
+    .legal-layout{ grid-template-columns: 1fr; }
+    .toc{ position: static; }
+  }
+
+  @media (max-width: 560px){
+    .wrap{ padding: 0 1.4rem; }
+    .hero{ padding: 2rem 0 1.5rem; }
+    section.clause{ padding: 1.5rem 1.25rem; }
+    footer{ flex-direction: column; gap: 0.5rem; align-items: flex-start; opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .bg-orb-1, .bg-orb-2{ animation: none; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <div class="wrap">
+
+    <nav>
+      <a href="https://www.apexmcc.org" class="logo"><span class="dot"></span>Apex MCC</a>
+      <a href="https://www.apexmcc.dev" class="back-link">← Back to home</a>
+    </nav>
+
+    <div class="hero">
+      <h1>Terms of <em>Service</em></h1>
+      <p class="lede">These Terms govern your access to and use of Apex MCC (apexmcc.org / apexmcc.dev) ("the Service"), provided by Apex MCC. By using the Service, you agree to these Terms.</p>
+      <div class="meta-row">
+        <span class="meta-pill">Effective September 8, 2026</span>
+        <span class="meta-pill">Last updated September 8, 2026</span>
+      </div>
+    </div>
+
+    <div class="legal-layout">
+
+      <aside class="toc">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li><a href="#acceptance">Acceptance of terms</a></li>
+          <li><a href="#accounts">Accounts</a></li>
+          <li><a href="#acceptable-use">Acceptable use</a></li>
+          <li><a href="#payment">Fees</a></li>
+          <li><a href="#ip">Intellectual property</a></li>
+          <li><a href="#user-content">User content</a></li>
+          <li><a href="#termination">Termination</a></li>
+          <li><a href="#disclaimers">Disclaimers</a></li>
+          <li><a href="#liability">Limitation of liability</a></li>
+          <li><a href="#indemnification">Indemnification</a></li>
+          <li><a href="#governing-law">Governing law &amp; disputes</a></li>
+          <li><a href="#changes">Changes to these terms</a></li>
+          <li><a href="#contact">Contact us</a></li>
+        </ol>
+      </aside>
+
+      <div class="content">
+
+        <section class="clause" id="acceptance">
+          <h2><span class="num">01</span>Acceptance of terms</h2>
+          <p>By accessing or using the Service, you agree to be bound by these Terms and our <a class="inline-link" href="privacy-policy.html">Privacy Policy</a>. If you do not agree, you may not access or use the Service. If you are using the Service on behalf of an organization, you represent that you have authority to bind that organization to these Terms.</p>
+        </section>
+
+        <section class="clause" id="accounts">
+          <h2><span class="num">02</span>Accounts</h2>
+          <p>You must provide accurate and complete information when creating an account and keep it up to date. You are responsible for safeguarding your password and for all activity that occurs under your account. Notify us immediately at support@apexmcc.org if you suspect unauthorized use.</p>
+          <p>You must be at least 16 years old to use the Service.</p>
+        </section>
+
+        <section class="clause" id="acceptable-use">
+          <h2><span class="num">03</span>Acceptable use</h2>
+          <p>You agree not to:</p>
+          <ul>
+            <li>Use the Service for any unlawful purpose or in violation of any applicable regulation;</li>
+            <li>Reverse engineer, decompile, or attempt to extract the source code of the Service, except where permitted by law;</li>
+            <li>Interfere with or disrupt the integrity or performance of the Service, including via malware, denial-of-service attacks, or unauthorized automated access;</li>
+            <li>Impersonate any person or entity, or misrepresent your affiliation;</li>
+            <li>Upload content that infringes the intellectual property or privacy rights of others.</li>
+          </ul>
+          <p>We reserve the right to suspend or terminate accounts that violate this section.</p>
+        </section>
+
+        <section class="clause" id="payment">
+          <h2><span class="num">04</span>Fees</h2>
+          <p>Apex MCC does not currently sell any products or charge fees for the Service. There is nothing to pay, and no refund policy applies. If this changes in the future, this section will be updated to describe applicable fees and refund terms before any charges are introduced.</p>
+        </section>
+
+        <section class="clause" id="ip">
+          <h2><span class="num">05</span>Intellectual property</h2>
+          <p>The Service, including its software, design, text, graphics, and logos, is owned by Apex MCC or its licensors and is protected by intellectual property laws. Subject to your compliance with these Terms, we grant you a limited, non-exclusive, non-transferable, revocable license to access and use the Service for its intended purpose.</p>
+        </section>
+
+        <section class="clause" id="user-content">
+          <h2><span class="num">06</span>User content</h2>
+          <p>You retain ownership of any content you submit, post, or upload to the Service ("User Content"). By submitting User Content, you grant Apex MCC a worldwide, non-exclusive, royalty-free license to host, store, reproduce, and display that content solely to operate and improve the Service.</p>
+          <p>You are solely responsible for your User Content and represent that you have all rights necessary to grant the license above.</p>
+        </section>
+
+        <section class="clause" id="termination">
+          <h2><span class="num">07</span>Termination</h2>
+          <p>You may stop using the Service and close your account at any time. We may suspend or terminate your access to the Service, with or without notice, if we believe you have violated these Terms, or for any other reason at our discretion, including discontinuation of the Service. Upon termination, provisions that by their nature should survive termination (including Sections 05 Intellectual Property, 08 Disclaimers, 09 Limitation of Liability, 10 Indemnification, and 11 Governing Law &amp; Disputes) will continue to apply.</p>
+        </section>
+
+        <section class="clause" id="disclaimers">
+          <h2><span class="num">08</span>Disclaimers</h2>
+          <p>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.</p>
+        </section>
+
+        <section class="clause" id="liability">
+          <h2><span class="num">09</span>Limitation of liability</h2>
+          <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, APEX MCC SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, ARISING FROM YOUR USE OF THE SERVICE. AS APEX MCC DOES NOT CHARGE FEES FOR THE SERVICE, OUR TOTAL LIABILITY FOR ANY CLAIM ARISING OUT OF THESE TERMS SHALL NOT EXCEED ONE HUNDRED U.S. DOLLARS ($100).</p>
+          <p>Some jurisdictions do not allow certain limitations on liability, so parts of this section may not apply to you.</p>
+        </section>
+
+        <section class="clause" id="indemnification">
+          <h2><span class="num">10</span>Indemnification</h2>
+          <p>You agree to indemnify and hold harmless Apex MCC, its officers, directors, and employees from any claims, damages, liabilities, and expenses (including reasonable attorneys' fees) arising out of your use of the Service or violation of these Terms.</p>
+        </section>
+
+        <section class="clause" id="governing-law">
+          <h2><span class="num">11</span>Governing law &amp; disputes</h2>
+          <p>These Terms are governed by the laws of the State of Michigan, United States, without regard to its conflict-of-law principles. Any dispute arising out of these Terms shall be resolved in the state or federal courts located in Michigan, and you consent to their exclusive jurisdiction.</p>
+          </section>
+
+        <section class="clause" id="changes">
+          <h2><span class="num">12</span>Changes to these terms</h2>
+          <p>We may modify these Terms from time to time. If we make material changes, we will post the updated Terms on our website with a revised "last updated" date before the changes take effect. Continued use of the Service after changes take effect constitutes acceptance of the revised Terms.</p>
+        </section>
+
+        <section class="clause" id="contact">
+          <h2><span class="num">13</span>Contact us</h2>
+          <p>Questions about these Terms should be sent to:</p>
+          <p><strong>Apex MCC</strong><br>
+          Email: <a class="inline-link" href="mailto:legal@apexmcc.org">legal@apexmcc.org</a></p>
+          <p>Apex MCC does not maintain a public mailing address. Email is the best way to reach us.</p>
+
+          <div class="legal-crosslink">
+            <a href="privacy-policy.html">Privacy Policy →</a>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Apex MCC. All rights reserved.</span>
+      <span><a href="privacy-policy.html">Privacy Policy</a></span>
+    </footer>
+
+  </div>
+</body>
+</html>
