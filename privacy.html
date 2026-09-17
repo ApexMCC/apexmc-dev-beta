@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Apex MCC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+    --background: rgb(0,0,0);
+    --foreground: hsl(127 29% 95%);
+    --primary: hsl(128 57% 51%);
+    --primary-foreground: hsl(129 54% 3%);
+    --muted: rgb(255,255,255);
+    --muted-foreground: rgb(255,255,255);
+    --card: hsl(144 29% 7%);
+    --border: hsl(144 29% 15%);
+    --nav-height: 64px;
+    --controls-height: 80px;
+    --accent-glow: hsl(128 57% 51% / 0.35);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html, body{ height: 100%; }
+  body{ overflow-y: auto; overflow-x: hidden; }
+
+  body{
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-orb-1 {
+    width: 420px;
+    height: 420px;
+    top: -120px;
+    right: -80px;
+    background: var(--accent-glow);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .bg-orb-2 {
+    width: 340px;
+    height: 340px;
+    bottom: -100px;
+    left: -60px;
+    background: rgba(120, 140, 255, 0.22);
+    animation: drift 22s ease-in-out infinite alternate-reverse;
+  }
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%);
+  }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-60px, 40px) scale(1.15); }
+  }
+
+  .wrap{
+    position: relative;
+    z-index: 1;
+    max-width: 1160px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 2.5rem 5px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* --- Nav --- */
+  nav{
+    height: var(--nav-height);
+    flex: 0 0 var(--nav-height);
+    display:flex;
+    align-items:center;
+    gap: 0.65rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo{ height: 32px; width: auto; display: block; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--foreground); font-size: 1.05rem; display:flex; align-items:center; }
+  .logo .dot{ width:8px; height:8px; border-radius:50%; background:var(--primary); display:inline-block; margin-right:0.5rem; box-shadow: 0 0 0 4px hsl(128 57% 51% / 0.18); }
+
+  .back-link{
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    opacity: 0.55;
+    text-decoration: none;
+    transition: opacity 0.15s ease, color 0.15s ease;
+  }
+
+  .back-link:hover{
+    opacity: 1;
+    color: var(--primary);
+  }
+
+  /* --- Hero --- */
+  .hero{
+    flex: 0 0 auto;
+    padding: 2.5rem 0 1.5rem;
+    max-width: 760px;
+  }
+
+  h1{
+    font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  h1 em{
+    font-style: italic;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .lede{
+    font-size: 0.92rem;
+    line-height: 1.55;
+    max-width: 60ch;
+    color: var(--muted-foreground);
+    opacity: 0.62;
+  }
+
+  .meta-row{
+    margin-top: 1.1rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill{
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: hsl(128 57% 51% / 0.1);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  /* --- Legal content layout --- */
+  .legal-layout{
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2.5rem;
+    padding-bottom: 5rem;
+    align-items: start;
+  }
+
+  .toc{
+    position: sticky;
+    top: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1.1rem;
+    background: var(--card);
+  }
+
+  .toc-title{
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted-foreground);
+    opacity: 0.5;
+    margin-bottom: 0.85rem;
+  }
+
+  .toc ol{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    counter-reset: toc;
+  }
+
+  .toc a{
+    counter-increment: toc;
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    opacity: 0.65;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: opacity 0.15s ease, color 0.15s ease;
+  }
+
+  .toc a::before{
+    content: counter(toc, decimal-leading-zero);
+    font-weight: 700;
+    color: var(--primary);
+    opacity: 0.9;
+    flex: 0 0 auto;
+  }
+
+  .toc a:hover{
+    opacity: 1;
+    color: var(--primary);
+  }
+
+  .content{
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--background);
+  }
+
+  section.clause{
+    padding: 2rem 2.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section.clause:last-child{
+    border-bottom: none;
+  }
+
+  section.clause h2{
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  section.clause h2 .num{
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: hsl(128 57% 51% / 0.1);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+  }
+
+  section.clause p{
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted-foreground);
+    opacity: 0.72;
+    margin-bottom: 0.9rem;
+  }
+
+  section.clause p:last-child{ margin-bottom: 0; }
+
+  section.clause ul{
+    margin: 0.9rem 0;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  section.clause li{
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+    opacity: 0.72;
+  }
+
+  section.clause strong{
+    color: var(--foreground);
+    opacity: 1;
+    font-weight: 600;
+  }
+
+  section.clause a.inline-link{
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px solid hsl(128 57% 51% / 0.35);
+  }
+
+  section.clause a.inline-link:hover{
+    border-bottom-color: var(--primary);
+  }
+.legal-crosslink{
+    margin-top: 1.75rem;
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .legal-crosslink a{
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--foreground);
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .legal-crosslink a:hover{
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  footer{
+    flex: 0 0 auto;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 0;
+    font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted-foreground);
+    opacity: 0.5;
+  }
+
+  footer a{ color: var(--foreground); opacity: 1; text-decoration: none; }
+  footer a:hover{ color: var(--primary); }
+
+  @media (max-width: 860px){
+    .legal-layout{ grid-template-columns: 1fr; }
+    .toc{ position: static; }
+  }
+
+  @media (max-width: 560px){
+    .wrap{ padding: 0 1.4rem; }
+    .hero{ padding: 2rem 0 1.5rem; }
+    section.clause{ padding: 1.5rem 1.25rem; }
+    footer{ flex-direction: column; gap: 0.5rem; align-items: flex-start; opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .bg-orb-1, .bg-orb-2{ animation: none; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <div class="wrap">
+
+    <nav>
+      <a href="https://www.apexmcc.org" class="logo"><span class="dot"></span>Apex MCC</a>
+      <a href="https://www.apexmcc.dev" class="back-link">← Back to home</a>
+    </nav>
+
+    <div class="hero">
+      <h1>Privacy <em>Policy</em></h1>
+      <p class="lede">This policy explains what information Apex MCC collects, why we collect it, and the choices you have. It applies to Apex MCC (apexmcc.org / apexmcc.dev).</p>
+      <div class="meta-row">
+        <span class="meta-pill">Effective September 8, 2026</span>
+        <span class="meta-pill">Last updated September 8, 2026</span>
+      </div>
+    </div>
+
+    <div class="legal-layout">
+
+      <aside class="toc">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li><a href="#information-we-collect">Information we collect</a></li>
+          <li><a href="#how-we-use-it">How we use information</a></li>
+          <li><a href="#sharing">How we share information</a></li>
+          <li><a href="#cookies">Cookies &amp; tracking</a></li>
+          <li><a href="#retention">Data retention</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#your-rights">Your rights &amp; choices</a></li>
+          <li><a href="#children">Children's privacy</a></li>
+          <li><a href="#transfers">International transfers</a></li>
+          <li><a href="#changes">Changes to this policy</a></li>
+          <li><a href="#contact">Contact us</a></li>
+        </ol>
+      </aside>
+
+      <div class="content">
+
+        <section class="clause" id="information-we-collect">
+          <h2><span class="num">01</span>Information we collect</h2>
+          <p>We collect information in the following ways:</p>
+          <ul>
+            <li><strong>Information you provide.</strong> Such as your name, email address, and any other information you choose to provide when you create an account, contact support, or fill out a form.</li>
+            <li><strong>Information collected automatically.</strong> Including IP address, device and browser type, pages viewed, and timestamps, gathered via Google Analytics and similar technologies.</li>
+            <li><strong>Information from third parties.</strong> Apex MCC does not sell products or process payments, so we do not receive financial information from payment processors. If this changes, this policy will be updated accordingly.</li>
+          </ul>
+        </section>
+
+        <section class="clause" id="how-we-use-it">
+          <h2><span class="num">02</span>How we use information</h2>
+          <p>We use the information we collect to:</p>
+          <ul>
+            <li>Provide, maintain, and improve Apex MCC;</li>
+            <li>Process transactions and send related information, including confirmations and invoices;</li>
+            <li>Respond to comments, questions, and support requests;</li>
+            <li>Send administrative messages, such as updates to our terms or this policy;</li>
+            <li>Monitor and analyze trends, usage, and activities in connection with our services;</li>
+            <li>Detect, investigate, and prevent fraudulent transactions and other illegal activities;</li>
+            <li>Send occasional updates about Apex MCC, if you have opted in to receive them — you can unsubscribe at any time.</li>
+          </ul>
+        </section>
+
+        <section class="clause" id="sharing">
+          <h2><span class="num">03</span>How we share information</h2>
+          <p>We do not sell your personal information. We may share information in the following circumstances:</p>
+          <ul>
+            <li><strong>Service providers.</strong> With vendors who perform services on our behalf, such as our website hosting provider and Google Analytics.</li>
+            <li><strong>Legal reasons.</strong> If required to do so by law, or in the good-faith belief that such action is necessary to comply with legal process or protect the rights, property, or safety of Apex MCC, our users, or others.</li>
+            <li><strong>Business transfers.</strong> In connection with a merger, sale of company assets, financing, or acquisition of all or a portion of our business.</li>
+            <li><strong>With your consent.</strong> In any other circumstances where we have your explicit consent.</li>
+          </ul>
+        </section>
+
+        <section class="clause" id="cookies">
+          <h2><span class="num">04</span>Cookies &amp; tracking technologies</h2>
+          <p>We use cookies and similar tracking technologies to operate our services, remember your preferences, and understand how visitors interact with our site. You can control cookies through your browser settings; disabling cookies may affect the functionality of the site.</p>
+          <p>We currently use cookies for essential site functionality and Google Analytics to understand aggregate site usage. Google Analytics may set its own cookies and collect information in accordance with <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</p>
+        </section>
+
+        <section class="clause" id="retention">
+          <h2><span class="num">05</span>Data retention</h2>
+          <p>We retain personal information for as long as necessary to provide our services, comply with our legal obligations, resolve disputes, and enforce our agreements. Specifically, we retain account and personal data for a maximum of 30 days, after which it is deleted or anonymized.</p>
+        </section>
+
+        <section class="clause" id="security">
+          <h2><span class="num">06</span>Security</h2>
+          <p>We implement reasonable technical and organizational measures designed to protect your information from unauthorized access, disclosure, alteration, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
+        </section>
+
+        <section class="clause" id="your-rights">
+          <h2><span class="num">07</span>Your rights &amp; choices</h2>
+          <p>Depending on your location, you may have the right to:</p>
+          <ul>
+            <li>Access, correct, or delete the personal information we hold about you;</li>
+            <li>Object to or restrict certain processing of your information;</li>
+            <li>Request a copy of your information in a portable format;</li>
+            <li>Withdraw consent where processing is based on consent;</li>
+            <li>Opt out of marketing communications at any time via the unsubscribe link in our emails.</li>
+          </ul>
+          <p>To exercise these rights, contact us at privacy@apexmcc.org. Residents of certain jurisdictions (e.g. the EEA/UK under GDPR, or California under the CCPA/CPRA) may have additional rights under those laws.</p>
+        </section>
+
+        <section class="clause" id="children">
+          <h2><span class="num">08</span>Children's privacy</h2>
+          <p>Our services are not directed to individuals under 16, and we do not knowingly collect personal information from anyone under that age. If we learn we have collected such information, we will delete it promptly.</p>
+        </section>
+
+        <section class="clause" id="transfers">
+          <h2><span class="num">09</span>International data transfers</h2>
+          <p>Apex MCC is based in the United States, and information we collect is processed and stored there. If you are located outside the United States, your information will be transferred to, and processed in, the United States, which may have data protection laws different from those in your country.</p>
+        </section>
+
+        <section class="clause" id="changes">
+          <h2><span class="num">10</span>Changes to this policy</h2>
+          <p>We may update this policy from time to time. If we make material changes, we will post the updated policy on our website with a revised "last updated" date prior to the change becoming effective. Your continued use of our services after a change constitutes acceptance of the updated policy.</p>
+        </section>
+
+        <section class="clause" id="contact">
+          <h2><span class="num">11</span>Contact us</h2>
+          <p>If you have questions about this Privacy Policy, please contact us at:</p>
+          <p><strong>Apex MCC</strong><br>
+          Email: <a class="inline-link" href="mailto:privacy@apexmcc.org">privacy@apexmcc.org</a></p>
+          <p>Apex MCC does not maintain a public mailing address. Email is the best way to reach us.</p>
+
+          <div class="legal-crosslink">
+            <a href="terms-of-service.html">Terms of Service →</a>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Apex MCC. All rights reserved.</span>
+      <span><a href="terms-of-service.html">Terms of Service</a></span>
+    </footer>
+
+  </div>
+</body>
+</html>

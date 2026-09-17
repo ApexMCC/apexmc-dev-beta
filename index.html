@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex One</title>
+<meta name="description" content="The digital hub for Apex, powering Apex MCC’s technology and services.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3bc94e">
+<link rel="canonical" href="https://apexmcc.dev/">
+<link rel="icon" href="ApexIcon.png" type="image/png">
+<link rel="apple-touch-icon" href="ApexIcon.png">
+
+<!-- Open Graph / link previews (Discord, Slack, iMessage, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apex One">
+<meta property="og:url" content="https://apexmcc.dev/">
+<meta property="og:title" content="Apex One">
+<meta property="og:description" content="The digital hub for Apex, powering Apex MCC’s technology and services.">
+<meta property="og:image" content="https://apexmcc.dev/ApexIcon.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+
+<!-- Twitter / X card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apex One">
+<meta name="twitter:description" content="The digital hub for Apex, powering Apex MCC’s technology and services.">
+<meta name="twitter:image" content="https://apexmcc.dev/ApexIcon.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Apex One",
+  "url": "https://apexmcc.dev/",
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "Apex MCC",
+    "url": "https://www.apexmcc.org"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --background: rgb(0,0,0);
+    --foreground: hsl(127 29% 95%);
+    --primary: hsl(128 57% 51%);
+    --primary-foreground: hsl(129 54% 3%);
+    --muted: rgb(255,255,255);
+    --muted-foreground: rgb(255,255,255);
+    --card: hsl(144 29% 7%);
+    --border: hsl(144 29% 15%);
+    --nav-height: 64px;
+    --controls-height: 80px;
+    --accent-glow: hsl(128 57% 51% / 0.35);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html, body{ height: 100%; }
+  body{ overflow-y: auto; overflow-x: hidden; }
+
+  body{
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-orb-1 {
+    width: 420px;
+    height: 420px;
+    top: -120px;
+    right: -80px;
+    background: var(--accent-glow);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .bg-orb-2 {
+    width: 340px;
+    height: 340px;
+    bottom: -100px;
+    left: -60px;
+    background: rgba(120, 140, 255, 0.22);
+    animation: drift 22s ease-in-out infinite alternate-reverse;
+  }
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%);
+  }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-60px, 40px) scale(1.15); }
+  }
+
+  .wrap{
+    position: relative;
+    z-index: 1;
+    max-width: 1160px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 2.5rem 5px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* --- Nav --- */
+  nav{
+    height: var(--nav-height);
+    flex: 0 0 var(--nav-height);
+    display:flex;
+    align-items:center;
+    gap: 0.65rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo{ height: 32px; width: auto; display: block; }
+
+  .back-link{
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    opacity: 0.55;
+    text-decoration: none;
+    transition: opacity 0.15s ease, color 0.15s ease;
+  }
+
+  .back-link:hover{
+    opacity: 1;
+    color: var(--primary);
+  }
+
+  /* --- Hero --- */
+  .hero{
+    flex: 0 0 auto;
+    padding: 2rem 0 1.5rem;
+    max-width: 680px;
+  }
+
+  h1{
+    font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  h1 em{
+    font-style: italic;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .lede{
+    font-size: 0.92rem;
+    line-height: 1.55;
+    max-width: 54ch;
+    color: var(--muted-foreground);
+    opacity: 0.62;
+  }
+
+  /* --- Cards --- */
+  .services{
+    padding-bottom: 5rem;
+  }
+
+  .blog{
+    padding-bottom: 5rem;
+  }
+
+  .blog-title{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+ .blog-grid{
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 1px;
+   background: var(--border);
+   border: 1px solid var(--border);
+   width: 100%;
+ }
+
+  .blog-card{
+    background: var(--background);
+    border: none;
+    border-radius: 0;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: background 0.15s ease, opacity 0.15s ease;
+  }
+
+  .blog-card:hover{
+    background: hsl(144 29% 9%);
+  }
+
+  .blog-card h3{
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .blog-card p{
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--muted-foreground);
+    opacity: 0.7;
+    flex: 1;
+  }
+
+  .blog-card a{
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .blog-card a:hover{
+    text-decoration: underline;
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    width: 100%;
+  }
+
+  .card{
+    background: var(--background);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s ease;
+  }
+
+  .card:hover{
+    background: var(--card);
+  }
+
+  .card.featured{
+    grid-column: span 2;
+    justify-content: space-between;
+  }
+
+  .card-icon{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: hsl(128 57% 51% / 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+  }
+
+  .card-icon svg{ width: 20px; height: 20px; }
+
+  .card-name{
+    font-size: 1.02rem;
+    font-weight: 600;
+  }
+
+  .card-desc{
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--muted-foreground);
+    opacity: 0.6;
+  }
+
+  .card-cta{
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .card-cta .arrow{
+    transition: transform 0.15s ease;
+  }
+
+  .card:hover .card-cta .arrow{
+    transform: translate(2px, -2px);
+  }
+
+  .live{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .live .dot{
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 3px hsl(128 57% 51% / 0.18);
+  }
+
+  .live.is-checking,
+  .live.is-unknown{
+    color: #f5c451;
+  }
+
+  .live.is-checking .dot,
+  .live.is-unknown .dot{
+    background: #f5c451;
+    box-shadow: 0 0 0 3px rgba(245, 196, 81, 0.18);
+  }
+
+  .live.is-incident{
+    color: #ff6b6b;
+  }
+
+  .live.is-incident .dot{
+    background: #ff6b6b;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.18);
+  }
+
+  footer{
+    flex: 0 0 auto;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 0;
+    font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted-foreground);
+    opacity: 0.5;
+  }
+
+  footer a{ color: var(--foreground); opacity: 1; text-decoration: none; }
+  footer a:hover{ color: var(--primary); }
+
+  .footer-links{
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  @media (max-width: 860px){
+    .grid{ grid-template-columns: repeat(2, 1fr); }
+    .card.featured{ grid-column: span 2; }
+    .blog-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px){
+    .wrap{ padding: 0 1.4rem; }
+    .grid{ grid-template-columns: 1fr; }
+    .card.featured{ grid-column: span 1; }
+    .hero{ padding: 3rem 0 2.5rem; }
+    footer{ flex-direction: column; gap: 0.5rem; align-items: flex-start; opacity: 1; }
+    .footer-links{ flex-wrap: wrap; gap: 0.9rem; }
+    .blog-grid{ grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .bg-orb-1, .bg-orb-2{ animation: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-grid"></div>
+  <div class="wrap">
+    <nav>
+      <img class="logo" src="ApexLongLogo.svg" alt="Apex logo">
+      <a class="back-link" href="https://www.apexmcc.org" target="_blank" rel="noopener noreferrer">apexmcc.org →</a>
+    </nav>
+
+    <section class="hero">
+      <h1>Every Apex service, <em>one</em> place to start.</h1>
+      <p class="lede">
+        Apex Development builds and maintains the identity, infrastructure, and tooling behind Apex MCC — internal and partner-facing, all linked from here.
+      </p>
+    </section>
+
+    <section class="services">
+      <div class="grid">
+
+        <a class="card featured" href="https://apex.latchid.org/" target="_blank" rel="noopener noreferrer">
+          <div>
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2.5L20 5.5V11C20 16 16.3 19.8 12 21.5C7.7 19.8 4 16 4 11V5.5L12 2.5Z"/>
+                <path d="M8.5 12L10.8 14.3L15.5 9.6"/>
+              </svg>
+            </div>
+            <div class="card-name" style="margin-top:0.9rem;">ApexID</div>
+            <p class="card-desc" style="margin-top:0.3rem;">ApexID provides centralized authentication and account access across Apex MCC services, powered by our trusted identity partner, LatchID.</p>
+          </div>
+          <span class="card-cta">Open ApexID <span class="arrow">→</span></span>
+        </a>
+
+        <a class="card" href="https://status.apexmcc.org" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2.5 13h3.2l1.8-5 2.6 10 1.8-7.5 1.6 2.5h6"/>
+            </svg>
+          </div>
+          <div class="card-name">System Status</div>
+          <p class="card-desc">Uptime and incident history for every public-facing service.</p>
+           <span class="live is-checking" id="system-status" role="status" aria-live="polite">
+             <span class="dot"></span><span class="label">Checking systems…</span>
+           </span>
+        </a>
+
+        <a class="card" href="#" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.5 17.5a13 13 0 0 1 17 0"/>
+              <path d="M6.8 14.2a8.5 8.5 0 0 1 10.4 0"/>
+              <path d="M10 11a4 4 0 0 1 4 0"/>
+              <circle cx="12" cy="18" r="1.1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="card-name">Apex Monitor</div>
+          <p class="card-desc">Coming soon.</p>
+          <span class="card-cta">Open <span class="arrow">→</span></span>
+        </a>
+
+        <a class="card" href="#" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.5 7L3.5 12L8.5 17"/>
+              <path d="M15.5 7L20.5 12L15.5 17"/>
+            </svg>
+          </div>
+          <div class="card-name">Developer Portal</div>
+          <p class="card-desc">Coming soon.</p>
+          <span class="card-cta">Open <span class="arrow">→</span></span>
+        </a>
+
+        <a class="card" href="#" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3.5" width="18" height="4.5" rx="1"/>
+              <rect x="3" y="9.75" width="18" height="4.5" rx="1"/>
+              <rect x="3" y="16" width="18" height="4.5" rx="1"/>
+              <circle cx="17.5" cy="5.75" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="17.5" cy="12" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="17.5" cy="18.25" r="0.9" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="card-name">Apex Systems</div>
+          <p class="card-desc">Coming soon.</p>
+          <span class="card-cta">Open <span class="arrow">→</span></span>
+        </a>
+
+        <a class="card" href="#" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9.5" cy="12" r="5.5"/>
+              <circle cx="14.5" cy="12" r="5.5"/>
+            </svg>
+          </div>
+          <div class="card-name">Partner Portal</div>
+          <p class="card-desc">Coming soon.</p>
+          <span class="card-cta">Open <span class="arrow">→</span></span>
+        </a>
+
+        <a class="card" href="https://www.apexmcc.org" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20.5C12 20.5 3.5 15.5 3.5 9.5C3.5 6.5 6 4.5 8.5 4.5C10 4.5 11.3 5.3 12 6.5C12.7 5.3 14 4.5 15.5 4.5C18 4.5 20.5 6.5 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z"/>
+            </svg>
+          </div>
+          <div class="card-name">Get Involved</div>
+          <p class="card-desc">Volunteer, donate, or partner with Apex MCC to help grow what we're building.</p>
+          <span class="card-cta">Open <span class="arrow">→</span></span>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="blog">
+      <h2 class="blog-title">Latest Updates</h2>
+
+      <div class="blog-grid">
+
+        <article class="blog-card">
+          <h3>Introducing ApexID v2.0</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+          <a href="#">Read More →</a>
+        </article>
+
+        <article class="blog-card">
+          <h3>System Status Improvements</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+          <a href="#">Read More →</a>
+        </article>
+
+        <article class="blog-card">
+          <h3>Developer Portal Beta</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+          <a href="#">Read More →</a>
+        </article>
+
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Apex MCC</span>
+      <span class="footer-links">
+        <a href="https://www.apexmcc.org" target="_blank" rel="noopener noreferrer">apexmcc.org</a>
+        <a href="https://www.apexmcc.dev/Privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
+        <a href="https://www.apexmcc.dev/Terms" target="_blank" rel="noopener noreferrer">Terms</a>
+      </span>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      // Only the System Status card is updated. The rest of the page is
+      // untouched. The PHP proxy avoids the browser's cross-origin block.
+      const statusEndpoint = '/uptime-status.php';
+      const statusElement = document.getElementById('system-status');
+      const labelElement = statusElement.querySelector('.label');
+
+      const setStatus = (className, label) => {
+        statusElement.className = `live ${className}`;
+        labelElement.textContent = label;
+      };
+
+      const applyStatus = (status) => {
+        if (!status || typeof status.label !== 'string') {
+          setStatus('is-unknown', 'Status unavailable');
+          return;
+        }
+        setStatus(status.className || '', status.label);
+      };
+
+      const getLatestStatus = (heartbeats) => {
+        if (!Array.isArray(heartbeats) || heartbeats.length === 0) return null;
+        return heartbeats[heartbeats.length - 1]?.status ?? null;
+      };
+
+      const statusFromHeartbeatData = (data) => {
+        // Kuma can return an empty heartbeat list for a monitor before its
+        // first check. Ignore those monitors, just like Kuma's status page.
+        const statuses = Object.values(data.heartbeatList || {})
+          .map(getLatestStatus)
+          .filter((status) => status !== null);
+
+        if (!statuses.length) {
+          return { className: 'is-unknown', label: 'Status unavailable' };
+        }
+        if (statuses.some((status) => status === 0)) {
+          return {
+            className: 'is-incident',
+            label: 'Systems experiencing issues',
+          };
+        }
+        if (statuses.some((status) => status === 2)) {
+          return {
+            className: 'is-checking',
+            label: 'Systems are being checked',
+          };
+        }
+        if (statuses.every((status) => status === 1)) {
+          return { className: '', label: 'All systems operational' };
+        }
+        return { className: 'is-unknown', label: 'Status unavailable' };
+      };
+
+      const refreshStatus = async () => {
+        setStatus('is-checking', 'Checking systems…');
+
+        try {
+          const response = await fetch(`${statusEndpoint}?_=${Date.now()}`, {
+            cache: 'no-store',
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          applyStatus(statusFromHeartbeatData(await response.json()));
+        } catch (error) {
+          console.warn('Unable to read Uptime Kuma status:', error);
+          setStatus('is-unknown', 'Status unavailable');
+        }
+      };
+
+      refreshStatus();
+      setInterval(refreshStatus, 10 * 1000);
+    })();
+  </script>
+</body>
+</html>
