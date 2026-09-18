@@ -227,6 +227,18 @@
     font-weight: 600;
     line-height: 1.3;
   }
+  .blog-card time{
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--primary);
+    opacity: 0.85;
+  }
+
+  .blog-card-muted{
+    grid-column: 1 / -1;
+  }
+
 
   .blog-card p{
     font-size: 0.88rem;
@@ -509,6 +521,16 @@
       </div>
     </section>
 
+    <section class="blog" aria-labelledby="blog-title">
+      <h2 class="blog-title" id="blog-title">Latest Updates</h2>
+      <div class="blog-grid" id="blog-grid" aria-live="polite">
+        <article class="blog-card blog-card-muted">
+          <h3>Loading updates…</h3>
+          <p>Fetching the latest posts from the blog folder.</p>
+        </article>
+      </div>
+    </section>
+
     <footer>
       <span>© 2026 Apex MCC</span>
       <span class="footer-links">
@@ -591,6 +613,69 @@
           window.setTimeout(refreshStatus, statusRefreshDelay);
         }
       };
+
+      const escapeHtml = (value) => String(value || '').replace(/[&<>"]/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+      }[char]));
+
+      const formatPostDate = (value) => {
+        if (!value) return '';
+        const date = new Date(`${value}T00:00:00`);
+        if (Number.isNaN(date.getTime())) return value;
+        return new Intl.DateTimeFormat('en-AU', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        }).format(date);
+      };
+
+      const loadBlogPosts = async () => {
+        const blogGrid = document.getElementById('blog-grid');
+        if (!blogGrid) return;
+
+        try {
+          const response = await fetch(`blogs/posts.json?_=${Date.now()}`, {
+            cache: 'no-store',
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          const posts = await response.json();
+          if (!Array.isArray(posts) || posts.length === 0) {
+            blogGrid.innerHTML = `
+              <article class="blog-card blog-card-muted">
+                <h3>No updates yet</h3>
+                <p>Check back soon for the latest Apex Development news.</p>
+              </article>
+            `;
+            return;
+          }
+
+          blogGrid.innerHTML = posts.map((post) => {
+            const slug = encodeURIComponent(post.slug || '');
+            return `
+              <article class="blog-card">
+                ${post.date ? `<time datetime="${escapeHtml(post.date)}">${escapeHtml(formatPostDate(post.date))}</time>` : ''}
+                <h3>${escapeHtml(post.title)}</h3>
+                <p>${escapeHtml(post.excerpt)}</p>
+                <a href="blog.html?post=${slug}">Read More →</a>
+              </article>
+            `;
+          }).join('');
+        } catch (error) {
+          console.warn('Unable to load blog posts:', error);
+          blogGrid.innerHTML = `
+            <article class="blog-card blog-card-muted">
+              <h3>Updates unavailable</h3>
+              <p>Blog posts could not be loaded right now.</p>
+            </article>
+          `;
+        }
+      };
+
+      loadBlogPosts();
 
       refreshStatus();
     })();

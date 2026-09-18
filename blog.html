@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | Apex One</title>
+<meta name="description" content="Apex One updates and announcements.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3bc94e">
+<link rel="canonical" href="https://apexmcc.dev/blog.html">
+<link rel="icon" href="ApexIcon.png" type="image/png">
+<link rel="apple-touch-icon" href="ApexIcon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --background: rgb(0,0,0);
+    --foreground: hsl(127 29% 95%);
+    --primary: hsl(128 57% 51%);
+    --muted-foreground: rgb(255,255,255);
+    --card: hsl(144 29% 7%);
+    --border: hsl(144 29% 15%);
+    --accent-glow: hsl(128 57% 51% / 0.35);
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .bg-orb{ position: fixed; width: 420px; height: 420px; top: -120px; right: -80px; border-radius: 50%; filter: blur(90px); opacity: 0.5; background: var(--accent-glow); pointer-events:none; }
+  .bg-grid{ position: fixed; inset: 0; pointer-events:none; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%); }
+  .wrap{ position: relative; z-index: 1; max-width: 860px; min-height: 100vh; margin: 0 auto; padding: 0 2.5rem 5px; display:flex; flex-direction:column; }
+  nav{ height: 64px; display:flex; align-items:center; gap: 0.65rem; border-bottom: 1px solid var(--border); }
+  .logo{ height: 32px; width: auto; display:block; }
+  .back-link{ margin-left:auto; color: var(--muted-foreground); opacity:0.55; text-decoration:none; font-size:0.85rem; font-weight:500; }
+  .back-link:hover{ opacity:1; color:var(--primary); }
+  main{ padding: 3rem 0 5rem; }
+  .post-shell{ background: var(--background); border: 1px solid var(--border); padding: clamp(1.5rem, 4vw, 3rem); }
+  .post-date{ display:block; color:var(--primary); font-size:0.82rem; font-weight:700; margin-bottom:1rem; }
+  h1{ font-size: clamp(2rem, 5vw, 3.2rem); line-height:1.05; letter-spacing:-0.03em; margin-bottom:1.25rem; }
+  .content{ color: var(--muted-foreground); opacity:0.78; font-size:1rem; line-height:1.75; }
+  .content h2{ color:var(--foreground); opacity:1; font-size:1.35rem; margin:2rem 0 0.75rem; }
+  .content p{ margin:0 0 1rem; }
+  .content ul{ margin:0 0 1.25rem 1.25rem; }
+  .content li{ margin:0.35rem 0; }
+  .content code{ color:var(--primary); background:hsl(144 29% 7%); padding:0.1rem 0.3rem; border-radius:4px; }
+  .inline-link{ color:var(--primary); text-decoration:none; font-weight:700; }
+  .inline-link:hover{ text-decoration:underline; }
+  footer{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; padding:0.9rem 0; font-size:0.78rem; border-top:1px solid var(--border); color:var(--muted-foreground); opacity:0.5; }
+  footer a{ color:var(--foreground); opacity:1; text-decoration:none; }
+  @media (max-width:560px){ .wrap{ padding:0 1.4rem; } footer{ flex-direction:column; gap:0.5rem; align-items:flex-start; opacity:1; } }
+</style>
+</head>
+<body>
+  <div class="bg-orb"></div>
+  <div class="bg-grid"></div>
+  <div class="wrap">
+    <nav>
+      <a href="index.html" aria-label="Apex One home"><img class="logo" src="ApexLongLogo.svg" alt="Apex logo"></a>
+      <a class="back-link" href="index.html">← Back home</a>
+    </nav>
+
+    <main>
+      <article class="post-shell">
+        <time class="post-date" id="post-date"></time>
+        <h1 id="post-title">Loading update…</h1>
+        <div class="content" id="post-content"><p>Fetching post content.</p></div>
+      </article>
+    </main>
+
+    <footer>
+      <span>© 2026 Apex MCC</span>
+      <span><a href="index.html">Apex One</a></span>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      const titleElement = document.getElementById('post-title');
+      const dateElement = document.getElementById('post-date');
+      const contentElement = document.getElementById('post-content');
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('post');
+
+      const escapeHtml = (value) => String(value || '').replace(/[&<>\"]/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '\"': '&quot;',
+      }[char]));
+
+      const formatPostDate = (value) => {
+        if (!value) return '';
+        const date = new Date(`${value}T00:00:00`);
+        if (Number.isNaN(date.getTime())) return value;
+        return new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
+      };
+
+      const inlineMarkdown = (value) => escapeHtml(value)
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a class="inline-link" href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+      const markdownToHtml = (markdown) => {
+        const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+        const output = [];
+        let listOpen = false;
+
+        const closeList = () => {
+          if (listOpen) {
+            output.push('</ul>');
+            listOpen = false;
+          }
+        };
+
+        for (const line of lines) {
+          if (!line.trim()) {
+            closeList();
+            continue;
+          }
+          if (line.startsWith('# ')) continue;
+          if (line.startsWith('## ')) {
+            closeList();
+            output.push(`<h2>${inlineMarkdown(line.slice(3))}</h2>`);
+            continue;
+          }
+          if (line.startsWith('- ')) {
+            if (!listOpen) {
+              output.push('<ul>');
+              listOpen = true;
+            }
+            output.push(`<li>${inlineMarkdown(line.slice(2))}</li>`);
+            continue;
+          }
+          closeList();
+          output.push(`<p>${inlineMarkdown(line)}</p>`);
+        }
+        closeList();
+        return output.join('\n');
+      };
+
+      const showMissing = () => {
+        document.title = 'Post not found | Apex One';
+        titleElement.textContent = 'Post not found';
+        dateElement.textContent = '';
+        contentElement.innerHTML = '<p>This update could not be found. <a class="inline-link" href="index.html">Return home</a>.</p>';
+      };
+
+      const loadPost = async () => {
+        if (!slug) {
+          showMissing();
+          return;
+        }
+
+        try {
+          const indexResponse = await fetch(`blogs/posts.json?_=${Date.now()}`, { cache: 'no-store' });
+          if (!indexResponse.ok) throw new Error(`HTTP ${indexResponse.status}`);
+          const posts = await indexResponse.json();
+          const post = Array.isArray(posts) ? posts.find((item) => item.slug === slug) : null;
+          if (!post || !post.file || !post.file.startsWith('blogs/')) {
+            showMissing();
+            return;
+          }
+
+          const postResponse = await fetch(`${post.file}?_=${Date.now()}`, { cache: 'no-store' });
+          if (!postResponse.ok) throw new Error(`HTTP ${postResponse.status}`);
+          const markdown = await postResponse.text();
+
+          document.title = `${post.title} | Apex One`;
+          titleElement.textContent = post.title;
+          dateElement.dateTime = post.date || '';
+          dateElement.textContent = formatPostDate(post.date);
+          contentElement.innerHTML = markdownToHtml(markdown);
+        } catch (error) {
+          console.warn('Unable to load blog post:', error);
+          showMissing();
+        }
+      };
+
+      loadPost();
+    })();
+  </script>
+</body>
+</html>
