@@ -184,6 +184,10 @@
 
   /* --- Cards --- */
   .services{
+    padding-bottom: 4rem;
+  }
+
+  .monitor-section{
     padding-bottom: 5rem;
   }
 
@@ -453,7 +457,7 @@
           <div class="card-name">System Status</div>
           <p class="card-desc">Uptime and incident history for every public-facing service.</p>
            <span class="live is-checking" id="system-status" role="status" aria-live="polite">
-             <span class="dot"></span><span class="label">Checking systems…</span>
+            <span class="dot"></span><span class="label">Checking systems…</span>
            </span>
         </a>
 
@@ -467,7 +471,7 @@
             </svg>
           </div>
           <div class="card-name">Apex Monitor</div>
-          <p class="card-desc">Coming soon.</p>
+          <p class="card-desc">Live system telemetry.</p>
         </article>
 
         <article class="card">
@@ -518,6 +522,13 @@
           <span class="card-cta">Open <span class="arrow">→</span></span>
         </a>
 
+      </div>
+    </section>
+
+    <section class="monitor-section" aria-labelledby="monitor-title">
+      <h2 class="blog-title" id="monitor-title">Apex Monitor Live Telemetry</h2>
+      <div style="border: 1px solid var(--border); background: var(--card); padding: 1rem; width: 100%; border-radius: 0; overflow: hidden;">
+        <iframe src="https://snapshots.raintank.io/dashboard/snapshot/25o06cGNuT05Hg8lWKXUaqv3FBPabvbi?from=2026-09-20T02:26:34.554Z&to=2026-09-21T02:26:34.554Z&timezone=browser&var-ds_prometheus=bfyvh4xf7x98gf&var-job=integrations%2Funix&var-nodename=v68619&var-node=v68619&refresh=10s" width="100%" height="600" style="border: none; display: block; background: #000;" title="Apex Monitor Live Snapshot" allowfullscreen></iframe>
       </div>
     </section>
 
