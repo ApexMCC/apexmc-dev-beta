@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Monitor — Live Telemetry</title>
+<meta name="description" content="Live system telemetry and Grafana monitoring for Apex MCC.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3bc94e">
+<link rel="canonical" href="https://apexmcc.dev/grafana">
+<link rel="icon" href="ApexIcon.png" type="image/png">
+<link rel="apple-touch-icon" href="ApexIcon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --background: rgb(0,0,0);
+    --foreground: hsl(127 29% 95%);
+    --primary: hsl(128 57% 51%);
+    --primary-foreground: hsl(129 54% 3%);
+    --muted-foreground: rgb(255,255,255);
+    --card: hsl(144 29% 7%);
+    --border: hsl(144 29% 15%);
+    --nav-height: 64px;
+    --accent-glow: hsl(128 57% 51% / 0.35);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html, body{ height: 100%; }
+  body{ overflow-y: auto; overflow-x: hidden; }
+
+  body{
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-orb-1 {
+    width: 420px;
+    height: 420px;
+    top: -120px;
+    right: -80px;
+    background: var(--accent-glow);
+  }
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%);
+  }
+
+  .wrap{
+    position: relative;
+    z-index: 1;
+    max-width: 1320px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* --- Nav --- */
+  nav{
+    height: var(--nav-height);
+    flex: 0 0 var(--nav-height);
+    display:flex;
+    align-items:center;
+    gap: 0.65rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .logo{ height: 32px; width: auto; display: block; }
+
+  .back-link{
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    opacity: 0.55;
+    text-decoration: none;
+    transition: opacity 0.15s ease, color 0.15s ease;
+  }
+
+  .back-link:hover{
+    opacity: 1;
+    color: var(--primary);
+  }
+
+  /* --- Header --- */
+  .page-header{
+    margin-bottom: 1.5rem;
+  }
+
+  h1{
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  .lede{
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
+    opacity: 0.62;
+  }
+
+  /* --- Embed Container --- */
+  .embed-container{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 6px;
+    overflow: hidden;
+    min-height: 650px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+
+  iframe {
+    width: 100%;
+    flex: 1;
+    border: none;
+    background: #000;
+    display: block;
+    min-height: 650px;
+  }
+
+  footer{
+    flex: 0 0 auto;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 0;
+    font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted-foreground);
+    opacity: 0.5;
+  }
+
+  footer a{ color: var(--foreground); opacity: 1; text-decoration: none; }
+  footer a:hover{ color: var(--primary); }
+
+  @media (max-width: 560px){
+    .wrap{ padding: 0 1rem; }
+    iframe{ min-height: 500px; }
+  }
+</style>
+</head>
+<body>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-grid"></div>
+  <div class="wrap">
+    <nav>
+      <a href="/"><img class="logo" src="ApexLongLogo.svg" alt="Apex logo"></a>
+      <a class="back-link" href="/">← Back to Hub</a>
+    </nav>
+
+    <div class="page-header">
+      <h1>Apex Monitor Dashboard</h1>
+      <p class="lede">Real-time infrastructure telemetry, metrics, and node status.</p>
+    </div>
+
+    <main class="embed-container">
+      <iframe src="https://snapshots.raintank.io/dashboard/snapshot/25o06cGNuT05Hg8lWKXUaqv3FBPabvbi?from=2026-09-20T02:26:34.554Z&to=2026-09-21T02:26:34.554Z&timezone=browser&var-ds_prometheus=bfyvh4xf7x98gf&var-job=integrations%2Funix&var-nodename=v68619&var-node=v68619&refresh=10s" title="Apex Monitor Live Snapshot" allowfullscreen></iframe>
+    </main>
+
+    <footer>
+      <span>© 2026 Apex MCC</span>
+      <a href="https://www.apexmcc.org" target="_blank" rel="noopener noreferrer">apexmcc.org</a>
+    </footer>
+  </div>
+</body>
+</html>
